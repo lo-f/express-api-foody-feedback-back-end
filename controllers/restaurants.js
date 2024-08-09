@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
     try {
         const restaurants = await Restaurant.find({})
-            .populate('author')
+            .populate("author")
             .sort({ createdAt: "desc" })
         res.status(200).json(restaurants)
     } catch (error) {
@@ -34,7 +34,8 @@ router.get("/", async (req, res) => {
 /* ------------------------- GET SELECTED RESTAURANT ------------------------ */
 router.get('/:restaurantId', async (req, res) => {
     try {
-        const restaurant = await Restaurant.findById(req.params.restaurantId).populate(["author", "reviews.author"])
+        const restaurant = await Restaurant.findById(req.params.restaurantId).populate("author")
+        res.status(200).json(restaurant)
     } catch (error) {
         res.status(500).json(error);
     }
@@ -80,6 +81,12 @@ router.post('/:restaurantId/reviews', async (req, res) => {
     try {
         req.body.author = req.user._id;
         const restaurant = await Restaurant.findById(req.params.restaurantId)
+        
+        if(!restaurant) {
+            return res.status(404).json({ message: "Restaurant Not Found"})
+        }
+
+        if(!restaurant.reviews) restaurant.reviews = [];
         restaurant.reviews.push(req.body)
         await restaurant.save();
 
@@ -87,6 +94,7 @@ router.post('/:restaurantId/reviews', async (req, res) => {
         newReview._doc.author = req.user
         res.status(201).json(newReview)
     } catch (error) {
+        console.log(error)
         res.status(500).json(error)
     }
 })
@@ -111,7 +119,7 @@ router.put('/:restaurantId/reviews/:reviewId', async (req, res) => {
         review.text = req.body.text;
         review.rating = req.body.rating;
         await restaurant.save();
-        req.status(200).json({ message: "Review Updated" })
+        res.status(200).json({ message: "Review Updated" })
     } catch (error) {
         res.status(500).json(error)
     }
