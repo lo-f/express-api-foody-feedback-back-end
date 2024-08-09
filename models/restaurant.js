@@ -32,9 +32,7 @@ const restaurantSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        reviews: {
-            reviews: [reviewsSchema]
-        },
+        reviews: [reviewsSchema], 
         category: {
             type: String,
             required: true,
@@ -44,8 +42,8 @@ const restaurantSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId, ref: "User"
         },
     },
-    { timestampes: true }
-)
+    { timestamps: true } 
+);
 
 const Restaurant = mongoose.model("Restaurant", restaurantSchema);
 module.exports = Restaurant;
