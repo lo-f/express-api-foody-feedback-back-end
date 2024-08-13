@@ -80,8 +80,7 @@ router.delete('/:restaurantId', async (req, res) => {
 router.post('/:restaurantId/reviews', async (req, res) => {
     try {
         req.body.author = req.user._id;
-        const restaurant = await Restaurant.findById(req.params.restaurantId)
-        
+        const restaurant = await Restaurant.findById(req.params.restaurantId).populate('reviews.author')
         if(!restaurant) {
             return res.status(404).json({ message: "Restaurant Not Found"})
         }
