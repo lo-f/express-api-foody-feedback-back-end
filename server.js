@@ -24,6 +24,6 @@ app.use('/users', usersRouter)
 app.use('/profiles', profilesRouter)
 app.use('/restaurants', restaurantRouter)
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log('The express app is ready!')
 })
