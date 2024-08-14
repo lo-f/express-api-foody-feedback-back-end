@@ -9,6 +9,7 @@ const usersRouter = require('./controllers/users')
 const profilesRouter = require('./controllers/profiles')
 const restaurantRouter = require('./controllers/restaurants')
 
+const PORT = process.env.PORT ? process.env.PORT : 3000
 
 mongoose.connect(process.env.MONGODB_URI)
 mongoose.connection.on('connected', () => {
