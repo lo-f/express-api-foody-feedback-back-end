@@ -8,12 +8,10 @@ const SALT_LENGTH = 12;
 
 router.post("/signup", async (req, res) => {
   try {
-    // Check if username is taken
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (userInDatabase) {
       return res.json({ error: "Username already taken." });
     }
-    // Create new user with hashed password
     const user = await User.create({
       username: req.body.username,
       hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH),
