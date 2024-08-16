@@ -15,7 +15,7 @@ const reviewsSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId, ref: "User"
         },
     },
-    { timestampes: true }
+    { timestamps: true }
 )
 
 /* ------------------------------- RESTAURANT ------------------------------- */
@@ -40,7 +40,15 @@ const restaurantSchema = new mongoose.Schema(
         category: {
             type: String,
             required: true,
-            enum: ["Chinese", "Italian", "Fast Food", "Mexican", "BBQ"]
+            enum: [
+                "American",
+                "Steakhouse",
+                "Sushi",
+                "Chinese",
+                "Italian",
+                "Fast Food",
+                "Mexican",
+                "BBQ"]
         },
         author: {
             type: mongoose.Schema.Types.ObjectId, ref: "User"
